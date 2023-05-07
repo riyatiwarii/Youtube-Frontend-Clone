@@ -14,23 +14,30 @@ const useGetVideos = () => {
     const[url, setUrl] = useState(API_URL)
 
     useEffect(() => {
+        alert("hello searchcount")
         setSearch(searchCount);
         setUrl(SEARCH_API_URL + latest)
       }, [searchCount]);
-
+    
     useEffect(() => {
+    if (searchCount > 0) {
+        alert("hello searchcount2")
         setVideos([])
         setUrl(SEARCH_API_URL + latest);
-      }, [search]);
-    
-    useEffect(() => { 
-        setUrl(API_URL)
-    }, [])
+    } else {
+        alert("hello searchcount3")
+        setUrl(API_URL);
+        setVideos([]);
+    }
+    }, [searchCount]);
 
     useEffect(() => {
         console.log(url);
+        alert("hello searchcount4")
         getVideos(url)
     }, [search]) 
+
+    console.log(url, search, searchCount);
     
     useEffect (() => {
         const handleScroll = () => {
@@ -45,9 +52,7 @@ const useGetVideos = () => {
     async function getVideos (url) {
         setIsLoading(true)
         const data = await fetch(`${url}&pageToken=${pageToken}`)
-        const jsonData = await data.json()
-        console.log(jsonData);
-        console.log(jsonData.items);        
+        const jsonData = await data.json()       
         setPageToken(jsonData.nextPageToken)
         setIsLoading(false)
         setVideos((prevData) => [...prevData, ...jsonData.items])    

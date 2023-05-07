@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react';
 import { SUGGESTIONS_URL } from '../Constants/constants';
 import { cacheSearchSuggestions } from "../../utils/searchSlice"
 import { searchCount } from '../../utils/apiSlice';
-import { Link } from 'react-router-dom';
+import { Link} from 'react-router-dom';
 
 const NavBar = () => {
 
@@ -82,7 +82,7 @@ const NavBar = () => {
                         }} value={searchQuery}
                         onFocus={() => { searchQuery && setShowSuggestions(true) } }
                         onBlur={() => setShowSuggestions(false)} />
-                        <button
+                        <Link to="/"
                         className="dark:bg-stone-800 dark:border-neutral-600 rounded-r-full border-2 md:h-full h-4 md:px-6 px-2 py-2 text-xs font-medium  transition duration-150 ease-in-out hover:bg-black hover:bg-opacity-5 focus:outline-none bg-slate-50"
                         type="button" onClick={() => {
                             if(searchQuery){
@@ -91,7 +91,7 @@ const NavBar = () => {
                             }
                         }}>
                         <TfiSearch className='md:text-base text-xs cursor-pointer'></TfiSearch>
-                        </button>
+                        </Link>
                         {
                 showSuggestions && (
                     <div className='bg-white absolute top-[2.5rem] w-10/12 py-2 px-4 font-semibold rounded-xl drop-shadow-2xl dark:text-gray-100 dark:bg-black'>

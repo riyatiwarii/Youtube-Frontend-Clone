@@ -7,7 +7,7 @@ const WatchPage = () => {
         <div className="flex flex-col">
          <div className="flex">
           <WatchVideo/>
-          <LiveChat/>
+          {/* <LiveChat/> */}
          </div>
         <CommentSection/>
         </div>
