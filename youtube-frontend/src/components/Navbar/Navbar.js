@@ -1,15 +1,18 @@
 import { RxHamburgerMenu } from 'react-icons/rx';
 import { TfiSearch } from 'react-icons/tfi';
-import { FaMicrophone } from 'react-icons/fa';
 import { BsPersonCircle, BsFillMoonFill } from 'react-icons/bs';
-import { MdOutlineWbSunny } from 'react-icons/md';
+import { MdOutlineWbSunny, MdMic, MdMicOff } from 'react-icons/md';
 import { useDispatch, useSelector} from 'react-redux'
 import { toggleSidebar } from '../../utils/toggleSlice';
 import { useEffect, useState } from 'react';
 import { SUGGESTIONS_URL } from '../Constants/constants';
 import { cacheSearchSuggestions } from "../../utils/searchSlice"
-import { searchCount } from '../../utils/apiSlice';
 import { Link} from 'react-router-dom';
+import {API_URL_PART_1, API_DEFAULT_PART_2_URL, API_SERACH_TEXT,
+    API_URL_SEARCH_PART_2, API_KEY,} from "../Constants/constants";
+import useVideos from '../../hooks/useVideos';
+import { setCount } from '../../utils/countSlice';
+import useSpeechToText  from '../../hooks/useSpeechToText';
 
 const NavBar = () => {
 
@@ -17,7 +20,9 @@ const NavBar = () => {
     function handleToggle () {
         dispatch(toggleSidebar())
     }
+
     
+
     const [theme, setTheme] = useState("light")
 
     useEffect(() => {
@@ -31,6 +36,13 @@ const NavBar = () => {
     const handleThemeSwitch = () => {
     setTheme(theme === "dark" ? "light" : "dark");
     };
+
+    const [apiPart2, setApiPart2] = useState(API_DEFAULT_PART_2_URL);
+    const [apiPart3, setApiPart3] = useState(API_SERACH_TEXT);
+    useVideos(API_URL_PART_1, apiPart2, apiPart3, API_KEY);
+    const HandleSetCount = () => {
+        dispatch(setCount());
+      };
 
     const [searchQuery, setSearchQuery] = useState("")
     const [suggestions, setSuggestions] = useState([])
@@ -61,6 +73,11 @@ const NavBar = () => {
         }))
     }
     
+    const [showMic, setShowMic] = useState(false);
+    const [resetTranscript, listenContinuously, listenStop, transcript] = useSpeechToText();
+    useEffect(() => {
+        setSearchQuery(transcript);
+      }, [transcript]);
     
     return (
         <nav className="dark:text-gray-100 dark:bg-black duration-100 sticky top-0 left-0 h-16 flex md:justify-around justify-center items-center xl:gap-72 lg:gap-12 md:gap-8 gap-2 z-10 bg-white">          
@@ -86,8 +103,12 @@ const NavBar = () => {
                         className="dark:bg-stone-800 dark:border-neutral-600 rounded-r-full border-2 md:h-full h-4 md:px-6 px-2 py-2 text-xs font-medium  transition duration-150 ease-in-out hover:bg-black hover:bg-opacity-5 focus:outline-none bg-slate-50"
                         type="button" onClick={() => {
                             if(searchQuery){
-                                dispatch(searchCount())
+                                setApiPart2(API_URL_SEARCH_PART_2);
+                                setApiPart3(searchQuery);
+                                HandleSetCount();
                                 window.scrollTo(0, 0);
+                                listenStop();
+                                setShowMic(false);
                             }
                         }}>
                         <TfiSearch className='md:text-base text-xs cursor-pointer'></TfiSearch>
@@ -108,7 +129,22 @@ const NavBar = () => {
                 )
             }
                 </div>
-                <FaMicrophone className='md:text-xl text-sm cursor-pointer'></FaMicrophone>
+                <div className="flex justify-center w-9 h-9 items-center cursor-pointer rounded-full hover:bg-neutral-300 dark:hover:bg-gray-800">
+                    {
+                        !showMic ? (
+                            <MdMic className='md:text-2xl text-sm cursor-pointer' onClick={() => {
+                                listenContinuously();
+                                setShowMic(true);
+                              }}></MdMic>
+                        ) : (
+                            <MdMicOff className='md:text-2xl text-sm cursor-pointer' onClick={() => {
+                                listenStop();
+                                setShowMic(false);
+                                resetTranscript();
+                              }}></MdMicOff>
+                        )
+                    }
+                </div>
             </div>
             <div className='flex items-center md:gap-2 gap-1'>
                 {theme === "light" ? <BsFillMoonFill className='md:text-xl text-sm mb-1 cursor-pointer' onClick={() => { handleThemeSwitch() }}></BsFillMoonFill> : <MdOutlineWbSunny className='md:text-2xl text-sm mb-1 cursor-pointer' onClick={() => { handleThemeSwitch() }}></MdOutlineWbSunny>}

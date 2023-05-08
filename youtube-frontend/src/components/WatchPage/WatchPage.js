@@ -4,7 +4,7 @@ import LiveChat from "../LiveChat/LiveChat"
 
 const WatchPage = () => {
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col justify-center mx-11 my-5">
          <div className="flex">
           <WatchVideo/>
           {/* <LiveChat/> */}
