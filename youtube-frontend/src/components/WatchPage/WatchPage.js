@@ -4,10 +4,10 @@ import LiveChat from "../LiveChat/LiveChat"
 
 const WatchPage = () => {
     return (
-        <div className="flex flex-col justify-center mx-11 my-5">
-         <div className="flex">
+        <div className="flex flex-col justify-center xl:mx-10 xl:my-5  mx-3 my-2">
+         <div className="flex lg:flex-row flex-col justify-between">
           <WatchVideo/>
-          {/* <LiveChat/> */}
+          <LiveChat/>
          </div>
         <CommentSection/>
         </div>
