@@ -86,7 +86,7 @@ const LiveChat = () => {
                 username: generateRandomName(),
                 userChat: generateRandomChatMessage()
             }))
-        }, 2000)
+        }, 4000)
         return () => {
             clearInterval(timer)
         }
@@ -110,7 +110,7 @@ const LiveChat = () => {
             {
                 liveChat && <>
             <div className="flex-grow px-4 py-2 overflow-y-scroll ">
-                <div className="flex flex-col-reverse xl:max-h-[480px] lg:max-h-[409px] max-h-[200px] space-y-4">
+                <div className="flex flex-col-reverse xl:h-[485px] lg:h-[409px] h-[200px] space-y-4">
                     {
                         usersLiveChat.map((item, index) => {
                             return <UserChat key={index} user = {item.username} userMsg = {item.userChat}/>
@@ -130,7 +130,7 @@ const LiveChat = () => {
                             setUserInput(e.target.value)
                         }}
                     />
-                    <AiOutlineSend className='text-2xl text-blue-600 cursor-pointer' onClick={handleUserInput}></AiOutlineSend>
+                    <button disabled={!userInput} onClick={handleUserInput}><AiOutlineSend className='text-2xl text-blue-600 cursor-pointer' ></AiOutlineSend></button>
                     </form>
                 </div>
             </div>

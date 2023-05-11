@@ -1,12 +1,10 @@
 import {useSelector } from 'react-redux'
 import ShimmerContainer from './ShimmerContainer'
 import Card from './Card'
-import useGetVideos from '../../hooks/useVideos'
 
 const MainSection = () => {
 
     const toggleStatus = useSelector((store) => store.toggle.isSidebarOpen)
-    // const [isLoading, videos] = useGetVideos()
     const { data, isLoading } = useSelector((store) => store.API_DATA.items);
     
     return (        

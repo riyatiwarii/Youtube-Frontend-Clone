@@ -127,7 +127,7 @@ const CommentSection = () => {
     };      
 
     return (
-        <div className="lg:w-4/6 w-full dark:text-gray-100 dark:bg-black duration-100">
+        <div className="lg:w-[70%] w-full dark:text-gray-100 dark:bg-black duration-100">
             <div className="flex flex-col justify-center gap-2 py-4">
                 <div className="flex-col">
                     <div className="flex gap-2">

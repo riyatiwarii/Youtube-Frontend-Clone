@@ -1,11 +1,12 @@
 import {useDispatch} from 'react-redux'
 import { useSearchParams } from 'react-router-dom'
 import { closeSidebar } from "../../utils/toggleSlice"
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { BsPersonCircle} from 'react-icons/bs';
 import {AiOutlineLike, AiOutlineDislike} from 'react-icons/ai';
 import {TbShare3, TbDots} from 'react-icons/tb';
 import {TfiDownload} from "react-icons/tfi"
+import ReactPlayer from 'react-player';
 
 const WatchVideo = () => {
     const dispatch = useDispatch();
@@ -14,12 +15,26 @@ const WatchVideo = () => {
     }, [dispatch])   
     const [searchParams] = useSearchParams()
     const videoId = searchParams.get('v')
+    const [isLoading, setIsLoading] = useState(true);
+
+    const handleOnLoad = () => {
+      setIsLoading(false);
+    };
     return (
         <section className="lg:w-[70%] w-full dark:text-gray-100 dark:bg-black duration-100 " style={{
             transition: "0.3s"
         }}>
             <div className='pb-3'>
                 <iframe className='w-full aspect-video' src={`https://www.youtube.com/embed/${videoId}`} title="YouTube video" allowFullScreen> </iframe>
+                {/* <ReactPlayer
+                className={`w-full aspect-video  my-2 ${isLoading ? "bg-gray-200 dark:bg-gray-800" : "bg-none"}`}
+                url={`https://www.youtube.com/watch?v=${videoId}`}
+                controls
+                width="100%"
+                height="100%"
+                style={{ backgroundColor: "#000000" }}
+                playing={true}
+                onLoad={handleOnLoad}/> */}
                 <h1 className='font-semibold md:text-lg py-2'>Building a Nested Comments System with React</h1>
                 <div className='flex justify-between flex-wrap md:flex-nowrap items-center md:gap-9 gap-3'>
                     <div className='flex justify-center gap-2 items-center'>
