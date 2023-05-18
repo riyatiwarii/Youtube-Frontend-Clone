@@ -25,12 +25,11 @@ const useRelatedVideos = (videoId) => {
         return () => window.removeEventListener("scroll", handleScroll);
       }, [pageToken]);
 
-      console.log(relatedVideos);
+
 
     async function getRelatedVideos() {
         setIsLoading(true);
         const data = await fetch(`https://www.googleapis.com/youtube/v3/search?key=AIzaSyDb8whlcnVXgcaL8rP21kQk8yjhiEKfvDo&part=snippet&type=video&maxResults=6&relatedToVideoId=${videoId}&pageToken=${pageToken}`);
-        console.log(data);
         const dataJson = await data.json();
         
         setIsLoading(false);
@@ -39,7 +38,7 @@ const useRelatedVideos = (videoId) => {
     
       }
 
-      console.log(pageToken);
+
 
     return [relatedVideos, isLoading]
 }

@@ -16,10 +16,43 @@ const WatchVideo = () => {
     const [searchParams] = useSearchParams()
     const videoId = searchParams.get('v')
     const [isLoading, setIsLoading] = useState(true);
+    const [channelDetails, setChannelDetails] = useState(null)
+    const [videoStats, setVideoStats] = useState(null)
 
     const handleOnLoad = () => {
       setIsLoading(false);
     };
+
+    useEffect(() => {
+        getVideoIdDetails()
+    }, [videoId])
+
+    async function getVideoIdDetails(){
+        const data = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=snippet%2Cstatistics&id=${videoId}&key=AIzaSyA4OY3EkyINr3s5GtIZb2WsgFgswRwFlCA`)
+        const jsonData = await data.json()
+        // console.log(jsonData);
+        setChannelDetails(jsonData.items[0].snippet)
+        setVideoStats(jsonData.items[0].statistics)
+    }
+
+    
+    console.log(channelDetails, videoStats);
+    // const {publishedAt, channelTitle, description} = videoDetails.snippet
+    // console.log(videoDetails.snippet.publishedAt, videoDetails.snippet.channelTitle, videoDetails.snippet.description);
+
+    function formatCount(count) {
+        if (!count) {
+          return;
+        }
+        if (count < 1000) {
+          return count.toString();
+        } else if (count >= 1000 && count < 1000000) {
+          return (count / 1000).toFixed(1) + "K ";
+        } else {
+          return (count / 1000000).toFixed(1) + "M ";
+        }
+      }
+
     return (
         <section className="lg:w-[70%] w-full dark:text-gray-100 dark:bg-black duration-100 " style={{
             transition: "0.3s"
@@ -34,19 +67,19 @@ const WatchVideo = () => {
                 style={{ backgroundColor: "#000000" }}
                 playing={true}
                 onLoad={handleOnLoad}/>
-                <h1 className='font-semibold md:text-lg py-2'>Building a Nested Comments System with React</h1>
+                <h1 className='font-semibold md:text-lg py-2'>{channelDetails?.title}</h1>
                 <div className='flex justify-between flex-wrap md:flex-nowrap items-center md:gap-9 gap-3'>
                     <div className='flex justify-center gap-2 items-center'>
                         <BsPersonCircle className='md:text-4xl text-lg mb-1 cursor-pointer'></BsPersonCircle>
                         <div className='flex flex-col'>
-                            <h2 className='font-semibold md:text-base text-sm'>Shadee Merhi</h2>
+                            <h2 className='font-semibold md:text-base text-sm'>{channelDetails?.channelTitle}</h2>
                             <span className='text-xs text-stone-500'>4.21K subscribers</span>
                         </div>
                         <button className='bg-black text-white md:px-4 md:py-2 px-2 py-1 rounded-3xl md:text-sm text-[0.8rem] font-semibold md:ml-4'>Subscribe</button>
                     </div>
                     <div className='flex justify-center gap-2 pr-2 dark:text-black'>
                         <div className='flex justify-center items-center'>
-                            <button className="bg-stone-100 font-semibold flex justify-center gap-2 items-center md:p-2 p-1 rounded-l-full border-r-2 border-stone-200 md:text-base text-xs hover:bg-stone-200"><AiOutlineLike className='md:text-2xl'></AiOutlineLike> 106</button>
+                            <button className="bg-stone-100 font-semibold flex justify-center gap-2 items-center md:p-2 p-1 rounded-l-full border-r-2 border-stone-200 md:text-base text-xs hover:bg-stone-200"><AiOutlineLike className='md:text-2xl'></AiOutlineLike>{formatCount(videoStats?.likeCount)}</button>
                             <button className="bg-stone-100 md:p-2 p-1 rounded-r-full hover:bg-stone-200"><AiOutlineDislike className='md:text-2xl'></AiOutlineDislike></button>
                         </div> 
                         <button className="bg-stone-100 font-semibold flex gap-1 items-center md:px-4 md:py-2 px-2 py-1 rounded-full md:text-base text-xs hover:bg-stone-200"><TbShare3 className='md:text-xl'></TbShare3> Share</button>
@@ -54,7 +87,15 @@ const WatchVideo = () => {
                         <button className="bg-stone-100 md:px-3 px-2 py-1 rounded-full hover:bg-stone-200"><TbDots className='md:text-xl'></TbDots></button>
                     </div>
                 </div>
-            </div>  
+                <div className="video-info bg-stone-100 p-2 rounded-lg">
+                    <div className="video-meta flex items-center font-medium">
+                        <p className="views mr-4">221K views</p>
+                        <p className="days-ago">2 days ago</p>
+                    </div>
+                    <p className="video-description text-gray-700">Detailed description goes here</p>
+                </div>
+            </div> 
+            
         </section>
     )
 }

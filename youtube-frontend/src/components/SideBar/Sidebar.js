@@ -44,7 +44,7 @@ const Sidebar = () => {
         if(categoryItem){
             setCategoryId(categoryItem.id)     
         }
-        console.log(jsonData);
+
     }
 
     useEffect(() => {

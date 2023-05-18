@@ -61,7 +61,7 @@ const useVideos = (
 
     const data = await fetch(apiUrl);
     const dataJson = await data.json();
-    console.log(dataJson);
+
     setPageToken(dataJson.nextPageToken);
     setIsLoading(false);
     setData((prevItems) => [...prevItems, ...dataJson?.items]);

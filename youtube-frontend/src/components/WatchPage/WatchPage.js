@@ -4,6 +4,7 @@ import LiveChat from "../LiveChat/LiveChat"
 import RelatedVideos from "../RelatedVideos/RelatedVideos"
 import { useLayoutEffect } from "react"
 
+
 const WatchPage = () => {
     useLayoutEffect(() => {
         window.scrollTo(0, 0);
