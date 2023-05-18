@@ -29,7 +29,8 @@ const useRelatedVideos = (videoId) => {
 
     async function getRelatedVideos() {
         setIsLoading(true);
-        const data = await fetch(`https://www.googleapis.com/youtube/v3/search?key=AIzaSyBMSVrr5nhDlc7U5p-w9i5mRjgk7sXda08&part=snippet&type=video&maxResults=6&relatedToVideoId=${videoId}&pageToken=${pageToken}`);
+        const data = await fetch(`https://www.googleapis.com/youtube/v3/search?key=AIzaSyDb8whlcnVXgcaL8rP21kQk8yjhiEKfvDo&part=snippet&type=video&maxResults=6&relatedToVideoId=${videoId}&pageToken=${pageToken}`);
+        console.log(data);
         const dataJson = await data.json();
         
         setIsLoading(false);

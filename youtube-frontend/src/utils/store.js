@@ -5,6 +5,7 @@ import liveChatSlice from './liveChatSlice'
 import dataSlice from './dataSlice'
 import countSlice from './countSlice'
 import commentsSlice from './commentsSlice'
+import categorySlice from './categorySlice'
 
 const store = configureStore({
     reducer: {
@@ -13,7 +14,8 @@ const store = configureStore({
         'livechat': liveChatSlice,
         'API_DATA': dataSlice,
         'countSlice': countSlice,
-        'comments': commentsSlice
+        'comments': commentsSlice,
+        "category": categorySlice
     }
 })
 

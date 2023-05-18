@@ -13,6 +13,8 @@ const useVideos = (
     API_URL_PART_1 + API_URL_PART_2 + API_URL_PART_3 + API_URL_PART_4;
   const { count } = useSelector((store) => store.countSlice);
   const [runAPI, setRunAPI] = useState(count);
+  const categoryStatus = useSelector((state) => state.category.categoryStatus);
+  const categoryId = useSelector((state) => state.category.categoryId);
 
   useEffect(() => {
     setRunAPI(count);
@@ -29,7 +31,7 @@ const useVideos = (
   useEffect(() => {
     setData([]);
     getCard();
-  }, [runAPI]);
+  }, [runAPI, categoryId]);
 
   useEffect(() => {
     handleAPIData([data, isLoading]);
@@ -50,8 +52,16 @@ const useVideos = (
 
   async function getCard() {
     setIsLoading(true);
-    const data = await fetch(`${API_URL}&pageToken=${pageToken}`);
+    let apiUrl;
+    if (categoryStatus) {
+      apiUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=12&key=AIzaSyA4OY3EkyINr3s5GtIZb2WsgFgswRwFlCA&videoCategoryId=${categoryId}&pageToken=${pageToken}`;
+    } else {
+      apiUrl = `${API_URL}&pageToken=${pageToken}`
+    }
+
+    const data = await fetch(apiUrl);
     const dataJson = await data.json();
+    console.log(dataJson);
     setPageToken(dataJson.nextPageToken);
     setIsLoading(false);
     setData((prevItems) => [...prevItems, ...dataJson?.items]);
@@ -61,3 +71,5 @@ const useVideos = (
 };
 
 export default useVideos;
+
+// fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=10&key=AIzaSyBAaa0tRjEkM3XG96ef9WoNZGVLVJ89wvM&videoCategoryId=${categoryId}&pageToken=${pageToken}`)

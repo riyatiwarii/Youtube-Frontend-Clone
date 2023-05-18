@@ -25,8 +25,7 @@ const WatchVideo = () => {
             transition: "0.3s"
         }}>
             <div className='pb-3'>
-                <iframe className='w-full aspect-video' src={`https://www.youtube.com/embed/${videoId}`} title="YouTube video" allowFullScreen> </iframe>
-                {/* <ReactPlayer
+                <ReactPlayer
                 className={`w-full aspect-video  my-2 ${isLoading ? "bg-gray-200 dark:bg-gray-800" : "bg-none"}`}
                 url={`https://www.youtube.com/watch?v=${videoId}`}
                 controls
@@ -34,7 +33,7 @@ const WatchVideo = () => {
                 height="100%"
                 style={{ backgroundColor: "#000000" }}
                 playing={true}
-                onLoad={handleOnLoad}/> */}
+                onLoad={handleOnLoad}/>
                 <h1 className='font-semibold md:text-lg py-2'>Building a Nested Comments System with React</h1>
                 <div className='flex justify-between flex-wrap md:flex-nowrap items-center md:gap-9 gap-3'>
                     <div className='flex justify-center gap-2 items-center'>
