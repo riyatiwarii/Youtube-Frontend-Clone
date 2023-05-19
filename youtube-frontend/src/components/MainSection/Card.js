@@ -46,7 +46,7 @@ const Card = ({item}) => {
 
     return (
         <Link className="flex flex-col" to={`/watch?v=${id?.videoId || id}`}>
-            <img className='xl:h-52 lg:h-40 md:h-40 h-2/3 rounded-xl'src={snippet.thumbnails.medium.url} />
+            <img className='xl:h-56 lg:h-40 md:h-40 h-2/3 rounded-xl'src={snippet.thumbnails.medium.url} />
             <h1 className="md:text-sm text-[10px] font-semibold">{snippet?.localized?.title || snippet?.title}</h1>
             <span className="md:text-sm text-[10px] text-stone-600 ">{snippet.channelTitle}</span>
             <div className={`flex items-center gap-x-2`}>

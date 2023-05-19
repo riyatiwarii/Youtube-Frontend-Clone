@@ -1,14 +1,15 @@
 export const SUGGESTIONS_URL = "http://suggestqueries.google.com/complete/search?client=firefox&q="
 export const API_URL_PART_1 = "https://youtube.googleapis.com/youtube/v3/";
-export const API_KEY = "&key=AIzaSyA4OY3EkyINr3s5GtIZb2WsgFgswRwFlCA"
-export const API_DEFAULT_PART_2_URL = "videos?part=snippet%2CcontentDetails%2Cstatistics&maxResults=12&chart=mostPopular&regionCode=IN";
+export const API_KEY = process.env.REACT_APP_API
+export const API_DEFAULT_PART_2_URL = "videos?part=snippet%2CcontentDetails%2Cstatistics&maxResults=12&chart=mostPopular&regionCode=IN&key=";
 export const API_URL_SEARCH_PART_2 = "search?part=snippet&maxResults=16&type=video&q=";
 export const API_SERACH_TEXT = "";
-// AIzaSyDb8whlcnVXgcaL8rP21kQk8yjhiEKfvDo
+export const CATEGORY_ID_URL = "https://www.googleapis.com/youtube/v3/videoCategories?part=snippet&regionCode=IN&key=" + API_KEY
 
-const API_URL = API_URL_PART_1 + API_DEFAULT_PART_2_URL + API_SERACH_TEXT + API_KEY;
 
-export const SEARCH_API_URL = API_URL_PART_1 + API_URL_SEARCH_PART_2 + API_SERACH_TEXT + API_KEY;
+const API_URL = API_URL_PART_1 + API_DEFAULT_PART_2_URL + API_KEY + API_SERACH_TEXT;
+
+export const SEARCH_API_URL = API_URL_PART_1 + API_URL_SEARCH_PART_2 + API_KEY + API_SERACH_TEXT;
 
 export default API_URL;
 

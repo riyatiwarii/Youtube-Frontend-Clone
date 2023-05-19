@@ -100,7 +100,7 @@ const LiveChat = () => {
         setUserInput("")
     }
     return (
-        <div className={`lg:w-[28%] w-full flex border border-stone-300 flex-col ${liveChat ? "h-auto" : "h-full"}`}>
+        <div className={` w-full flex border border-stone-300 flex-col ${liveChat ? "h-auto" : "h-10"}`}>
             <div className="bg-white border-b border-gray-200">
                 <div className="flex items-center justify-between max-w-7xl mx-auto px-4 py-2">
                     <div className="font-bold text-lg text-gray-800">Live Chat</div>
@@ -109,8 +109,8 @@ const LiveChat = () => {
             </div>
             {
                 liveChat && <>
-            <div className="flex-grow px-4 py-2 overflow-y-scroll ">
-                <div className="flex flex-col-reverse xl:h-[485px] lg:h-[409px] h-[200px] space-y-4">
+            <div className="flex-grow px-4 py-2">
+                <div className="flex flex-col-reverse overflow-y-scroll xl:h-[485px] lg:h-[409px] h-[200px] space-y-4">
                     {
                         usersLiveChat.map((item, index) => {
                             return <UserChat key={index} user = {item.username} userMsg = {item.userChat}/>

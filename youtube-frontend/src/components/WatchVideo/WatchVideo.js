@@ -18,6 +18,8 @@ const WatchVideo = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [channelDetails, setChannelDetails] = useState(null)
     const [videoStats, setVideoStats] = useState(null)
+    const [readMore, setReadMore] = useState(false);
+    const [showDescription, setShowDescription] = useState(500);
 
     const handleOnLoad = () => {
       setIsLoading(false);
@@ -28,17 +30,11 @@ const WatchVideo = () => {
     }, [videoId])
 
     async function getVideoIdDetails(){
-        const data = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=snippet%2Cstatistics&id=${videoId}&key=AIzaSyA4OY3EkyINr3s5GtIZb2WsgFgswRwFlCA`)
+        const data = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=snippet%2Cstatistics&id=${videoId}&key=AIzaSyAurpw11Txt3gTkNVXvPh3xVia7nzsHqSY`)
         const jsonData = await data.json()
-        // console.log(jsonData);
         setChannelDetails(jsonData.items[0].snippet)
         setVideoStats(jsonData.items[0].statistics)
     }
-
-    
-    console.log(channelDetails, videoStats);
-    // const {publishedAt, channelTitle, description} = videoDetails.snippet
-    // console.log(videoDetails.snippet.publishedAt, videoDetails.snippet.channelTitle, videoDetails.snippet.description);
 
     function formatCount(count) {
         if (!count) {
@@ -54,7 +50,7 @@ const WatchVideo = () => {
       }
 
     return (
-        <section className="lg:w-[70%] w-full dark:text-gray-100 dark:bg-black duration-100 " style={{
+        <section className=" w-full dark:text-gray-100 dark:bg-black duration-100 " style={{
             transition: "0.3s"
         }}>
             <div className='pb-3'>
@@ -87,12 +83,28 @@ const WatchVideo = () => {
                         <button className="bg-stone-100 md:px-3 px-2 py-1 rounded-full hover:bg-stone-200"><TbDots className='md:text-xl'></TbDots></button>
                     </div>
                 </div>
-                <div className="video-info bg-stone-100 p-2 rounded-lg">
+                <div className="video-info mt-4 bg-stone-100 p-2 rounded-lg">
                     <div className="video-meta flex items-center font-medium">
                         <p className="views mr-4">221K views</p>
                         <p className="days-ago">2 days ago</p>
                     </div>
-                    <p className="video-description text-gray-700">Detailed description goes here</p>
+                    <p className="video-description text-gray-700">{channelDetails?.description.length > 500
+                ? channelDetails?.description.slice(0, showDescription) +"... "
+                : channelDetails?.description}</p>
+                    {channelDetails?.description.length > 500 ? (
+                <button className=" text-md font-bold text-stone-500"
+                  onClick={() => {
+                    setReadMore(!readMore);
+                    if (readMore) {
+                      setShowDescription(500);
+                    } else {
+                      setShowDescription(channelDetails?.description.length);
+                    }
+                  }}
+                >
+                  {!readMore ? "Read More" : "Read Less"}
+                </button>
+              ) : null}
                 </div>
             </div> 
             

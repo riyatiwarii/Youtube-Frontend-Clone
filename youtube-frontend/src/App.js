@@ -4,6 +4,7 @@ import MainSection from "../src/components/MainSection/MainSection"
 // import WatchVideo from "../src/components/WatchVideo/WatchVideo"
 import {createBrowserRouter, Outlet} from "react-router-dom";
 import WatchPage from "./components/WatchPage/WatchPage";
+import ErrorPage from "./components/ErrorPage/ErrorPage";
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const appRouter = createBrowserRouter([
   {
     path: "/",
     element: <App/>,
+    errorElement: <ErrorPage/>,
     children: [
       {
         path: "/",

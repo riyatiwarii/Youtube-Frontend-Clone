@@ -9,6 +9,7 @@ import { categoryIdStatus, categoryMode } from '../../utils/categorySlice';
 import {MdHomeFilled, MdSportsCricket, MdTheaterComedy, MdTravelExplore, MdMovie} from 'react-icons/md';
 import { Link, useSearchParams} from 'react-router-dom'
 import { useEffect, useState } from 'react';
+import { CATEGORY_ID_URL } from '../Constants/constants';
 
 const Sidebar = () => {
     const toggleStatus = useSelector((store) => store.toggle.isSidebarOpen)
@@ -38,7 +39,7 @@ const Sidebar = () => {
     }, [category])
 
     async function getCategoryId(){
-        const data = await fetch("https://www.googleapis.com/youtube/v3/videoCategories?part=snippet&regionCode=IN&key=AIzaSyBkyjsYP6fEhv0LjuUQIt6trfaqpfZMV8c")
+        const data = await fetch(CATEGORY_ID_URL)
         const jsonData = await data.json()
         const categoryItem = jsonData.items.find(item => item.snippet.title === category)
         if(categoryItem){
@@ -67,7 +68,7 @@ const Sidebar = () => {
                 const IconComponent = item.icon;
                 return (
                  <>
-                    <Link className={`flex items-center xl:gap-4 lg:gap-6 md:gap-6 gap-0 w-9/12 cursor-pointer hover:bg-stone-100`} key={index} to={item.path} onClick={() => {
+                    <Link className={`flex items-center xl:gap-4 lg:gap-6 md:gap-6 gap-0 w-9/12 cursor-pointer hover:bg-stone-100 dark:hover:bg-stone-500`} key={index} to={item.path} onClick={() => {
                         if (item.label !== 'Home'){
                             setCategory(item.label)
                             dispatch(categoryMode(true))
@@ -89,7 +90,7 @@ const Sidebar = () => {
             </div>
         </aside>
         {
-            videoId && <div className={`${toggleStatus && 'fixed top-0 left-44 w-full h-full backdrop-opacity-10 backdrop-invert bg-black/50'}`} onClick={() => {handleToggle()}} style={{
+            videoId && <div className={`${toggleStatus && 'fixed top-0 lg:left-44 md:left-36 sm:left-16 left-20 w-full h-full backdrop-opacity-10 backdrop-invert bg-black/50'}`} onClick={() => {handleToggle()}} style={{
                 transition: "0.5s"
             }}></div>
         }

@@ -8,7 +8,7 @@ const RelatedVideos = () => {
     const videoId = searchParams.get('v')
     const [relatedVideos, isLoading] = useRelatedVideos(videoId)
     return (
-        <div className="py-8 lg:w-[28%] w-full">
+        <div className="py-8  w-full">
             <div className="container mx-auto px-4">
                 <div className="grid grid-cols-1 gap-4">
                 {

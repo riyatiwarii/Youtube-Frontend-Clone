@@ -21,8 +21,6 @@ const NavBar = () => {
         dispatch(toggleSidebar())
     }
 
-    
-
     const [theme, setTheme] = useState("light")
 
     useEffect(() => {
@@ -84,7 +82,9 @@ const NavBar = () => {
             <div className='flex justify-center items-center xl:gap-3 lg:gap-6 md:gap-6 gap-0'>
                 <RxHamburgerMenu className= "w-8 lg:h-6 md:h-4 h-3 cursor-pointer" onClick={() => {handleToggle()}} ></RxHamburgerMenu>
                 <Link to={"/"}>
-                    <img className='xl:h-12 lg:h-10 md:h-9 h-8 md:w-full w-16 cursor-pointer' src='https://logos-world.net/wp-content/uploads/2020/04/YouTube-Logo.png'/>
+                    {
+                        theme === "light" ? <img className='xl:h-12 lg:h-10 md:h-9 h-8 md:w-full w-16 cursor-pointer' src='https://logos-world.net/wp-content/uploads/2020/04/YouTube-Logo.png'/> : <img className='xl:h-20 lg:h-16 md:h-16 h-10  cursor-pointer' src='https://i.ytimg.com/vi/smChmgocnfU/hqdefault.jpg'/>
+                    }
                 </Link>
             </div>
             <div className='xl:w-5/12 lg:w-8/12 md:w-8/12 flex justify-center items-center md:gap-5 gap-1'>
@@ -98,7 +98,9 @@ const NavBar = () => {
                             setShowSuggestions(true)
                         }} value={searchQuery}
                         onFocus={() => { searchQuery && setShowSuggestions(true) } }
-                        onBlur={() => setShowSuggestions(false)} />
+                        onBlur={() => setTimeout(()=>{
+                            setShowSuggestions(false)
+                        }, 200)} />
                         <Link to="/"
                         className="dark:bg-stone-800 dark:border-neutral-600 rounded-r-full border-2 md:h-full h-4 md:px-6 px-2 py-2 text-xs font-medium  transition duration-150 ease-in-out hover:bg-black hover:bg-opacity-5 focus:outline-none bg-slate-50"
                         type="button" onClick={() => {
@@ -119,7 +121,9 @@ const NavBar = () => {
                         {suggestions.length > 0 ? (
                         <ul>
                             {suggestions.map((item, index) => {
-                                return <li key={index} className='py-1 hover:bg-gray-100'>{item}</li>
+                                return <li key={index} className='py-1 hover:bg-gray-100 cursor-pointer' onClick={() => {
+                                    setSearchQuery(item)
+                                }}>{item}</li>
                             })}
                         </ul>
                         ) : (
@@ -132,16 +136,16 @@ const NavBar = () => {
                 <div className="flex justify-center w-9 h-9 items-center cursor-pointer rounded-full hover:bg-neutral-300 dark:hover:bg-gray-800">
                     {
                         !showMic ? (
-                            <MdMic className='md:text-2xl text-sm cursor-pointer' onClick={() => {
+                            <MdMicOff className='md:text-2xl text-sm cursor-pointer' onClick={() => {
                                 listenContinuously();
                                 setShowMic(true);
-                              }}></MdMic>
+                              }}></MdMicOff>
                         ) : (
-                            <MdMicOff className='md:text-2xl text-sm cursor-pointer' onClick={() => {
+                            <MdMic className='md:text-2xl text-sm cursor-pointer' onClick={() => {
                                 listenStop();
                                 setShowMic(false);
                                 resetTranscript();
-                              }}></MdMicOff>
+                              }}></MdMic>
                         )
                     }
                 </div>
